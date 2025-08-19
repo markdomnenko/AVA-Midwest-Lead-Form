@@ -109,43 +109,19 @@
 
       <button type="button" class="ava-submit-btn" onclick="submitForm()">Submit</button>
 
-      <!-- JavaScript redirect solution -->
       <script>
-      // Wait for DOM to be ready
-      document.addEventListener('DOMContentLoaded', function() {
-        document.querySelector("#WebToLeadForm").addEventListener("submit", function(e) {
-          e.preventDefault(); // stop default iframe behavior
-          const form = this;
+      document.querySelector("form").addEventListener("submit", function(e) {
+        e.preventDefault(); // stop default iframe behavior
+        const form = this;
 
-          // Show loading state
-          const submitBtn = document.querySelector('.ava-submit-btn');
-          const originalText = submitBtn.innerHTML;
-          submitBtn.innerHTML = 'Submitting...';
-          submitBtn.disabled = true;
-
-          // build FormData and send via fetch
-          fetch(form.action, {
-            method: form.method,
-            body: new FormData(form)
-          }).then(response => {
-            // Try to redirect parent window first, fallback to current window
-            try {
-              if (window.top !== window) {
-                window.top.location.href = "https://www.avarecycling.com/thankyou.html";
-              } else {
-                window.location.href = "https://www.avarecycling.com/thankyou.html";
-              }
-            } catch(e) {
-              // If cross-origin restrictions prevent parent access, redirect current window
-              window.location.href = "https://www.avarecycling.com/thankyou.html";
-            }
-          }).catch(error => {
-            console.error('Form submission error:', error);
-            alert("There was an error submitting the form. Please try again.");
-            // Restore button state
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-          });
+        // build FormData and send via fetch
+        fetch(form.action, {
+          method: form.method,
+          body: new FormData(form)
+        }).then(() => {
+          window.location.href = "https://www.avarecycling.com/thankyou.html"; // replace with your thank you page URL
+        }).catch(() => {
+          alert("There was an error submitting the form. Please try again.");
         });
       });
       </script>
@@ -219,8 +195,7 @@
     const tVal  = document.getElementById('js_token_value').value;
     if (!tName || !/^[A-Za-z0-9_.-]+$/.test(tVal)) return false;
 
-    // Trigger the form submit event (which will be intercepted by our event listener)
-    form.dispatchEvent(new Event('submit'));
+    form.submit();
     return true;
   }
 
@@ -246,3 +221,6 @@
 
     sendHeight();
   });
+</script>
+</body>
+</html>
