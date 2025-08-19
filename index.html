@@ -186,6 +186,7 @@
     setSubmitEnabled(false);
     document.addEventListener('keydown', ()=> keystrokes++);
     document.addEventListener('mousemove', ()=> mouseMovements++);
+
     document.getElementById('lead_source_description').value = window.location.href;
     document.getElementById('form_timestamp').value = String(Date.now());
     document.getElementById('form_rendered_at').value = String(formStartTime);
