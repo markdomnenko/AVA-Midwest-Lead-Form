@@ -9,7 +9,7 @@
       width: 100%;
       max-width: 960px;
       background: #f7f9fc;
-      padding: 10px;
+      padding: 30px;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
       font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -40,7 +40,7 @@
 <body>
 <div style="display:flex; justify-content:center; padding:10px;">
   <div class="ava-form-wide">
-    <h1>-Get A Free Quote-</h1>
+    <h1>-Get A Free Quote Today-</h1>
 
     <!-- Button-gated submit -->
     <form id="WebToLeadForm" action="https://stsrecycling.sugarondemand.com/index.php?entryPoint=WebToLeadCapture" method="POST">
@@ -191,28 +191,8 @@
     document.addEventListener('keydown', ()=> keystrokes++);
     document.addEventListener('mousemove', ()=> mouseMovements++);
 
-    // Try multiple methods to get the actual page URL
-    let sourceUrl = window.location.href; // fallback to iframe URL
-    
-    // Check if source URL was passed as a parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const sourceParam = urlParams.get('source');
-    if (sourceParam) {
-      sourceUrl = decodeURIComponent(sourceParam);
-    } else {
-      try {
-        // Method 1: Try to access parent window location (may fail due to CORS)
-        if (window.parent !== window && window.parent.location.href) {
-          sourceUrl = window.parent.location.href;
-        }
-      } catch(e) {
-        // Method 2: Use document.referrer if parent access fails
-        if (document.referrer) {
-          sourceUrl = document.referrer;
-        }
-      }
-    }
-    
+    // Simple approach - just capture the referrer domain or iframe URL
+    const sourceUrl = document.referrer || window.location.href;
     document.getElementById('lead_source_description').value = sourceUrl;
     document.getElementById('form_timestamp').value = String(Date.now());
     document.getElementById('form_rendered_at').value = String(formStartTime);
