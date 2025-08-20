@@ -40,7 +40,7 @@
 <body>
 <div style="display:flex; justify-content:center; padding:20px;">
   <div class="ava-form-wide">
-    <h1>-Get A Free Quote Today-</h1>
+    <h1>-Get A Free Quote-</h1>
 
     <!-- Button-gated submit -->
     <form id="WebToLeadForm" action="https://stsrecycling.sugarondemand.com/index.php?entryPoint=WebToLeadCapture" method="POST">
@@ -109,22 +109,7 @@
 
       <button type="button" class="ava-submit-btn" onclick="submitForm()">Submit</button>
 
-      <script>
-      document.querySelector("form").addEventListener("submit", function(e) {
-        e.preventDefault(); // stop default iframe behavior
-        const form = this;
 
-        // build FormData and send via fetch
-        fetch(form.action, {
-          method: form.method,
-          body: new FormData(form)
-        }).then(() => {
-          window.location.href = "https://www.avarecycling.com/thankyou.html"; // replace with your thank you page URL
-        }).catch(() => {
-          alert("There was an error submitting the form. Please try again.");
-        });
-      });
-      </script>
     </form>
   </div>
 </div>
@@ -195,7 +180,15 @@
     const tVal  = document.getElementById('js_token_value').value;
     if (!tName || !/^[A-Za-z0-9_.-]+$/.test(tVal)) return false;
 
-    form.submit();
+    // Instead of form.submit(), use fetch to submit and redirect
+    fetch(form.action, {
+      method: form.method,
+      body: new FormData(form)
+    }).then(() => {
+      window.location.href = "https://www.avarecycling.com/thankyou.html";
+    }).catch(() => {
+      alert("There was an error submitting the form. Please try again.");
+    });
     return true;
   }
 
