@@ -43,9 +43,9 @@
   </style>
 </head>
 <body>
-<div style="display:flex; justify-content:center; padding:0;">
+<div style="display:flex; justify-content:center;">
   <div class="ava-form-wide">
-    <h1>-Get A Free Quote Today-</h1>
+    <h1>-Get A Free Quote-</h1>
 
     <!-- Button-gated submit -->
     <form id="WebToLeadForm" action="https://stsrecycling.sugarondemand.com/index.php?entryPoint=WebToLeadCapture" method="POST">
@@ -185,15 +185,9 @@
     const tVal  = document.getElementById('js_token_value').value;
     if (!tName || !/^[A-Za-z0-9_.-]+$/.test(tVal)) return false;
 
-    // Instead of form.submit(), use fetch to submit and redirect
-    fetch(form.action, {
-      method: form.method,
-      body: new FormData(form)
-    }).then(() => {
-      window.location.href = "https://www.avarecycling.com/thankyou.html";
-    }).catch(() => {
-      alert("There was an error submitting the form. Please try again.");
-    });
+    // Submit the form normally, but try to redirect the parent window
+    form.target = "_parent"; // Try to submit to parent window instead of iframe
+    form.submit();
     return true;
   }
 
