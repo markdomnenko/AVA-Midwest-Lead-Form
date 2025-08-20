@@ -45,7 +45,7 @@
 <body>
 <div style="display:flex; justify-content:center;">
   <div class="ava-form-wide">
-    <h1>-Get A Free Quote Today-</h1>
+    <h1>-Get A Free Quote-</h1>
 
     <!-- Button-gated submit -->
     <form id="WebToLeadForm" action="https://stsrecycling.sugarondemand.com/index.php?entryPoint=WebToLeadCapture" method="POST">
@@ -196,7 +196,22 @@
     document.addEventListener('keydown', ()=> keystrokes++);
     document.addEventListener('mousemove', ()=> mouseMovements++);
 
-    document.getElementById('lead_source_description').value = (window.parent !== window) ? document.referrer || window.location.href : window.location.href;
+    // Try multiple methods to get the actual page URL
+    let sourceUrl = window.location.href; // fallback to iframe URL
+    
+    try {
+      // Method 1: Try to access parent window location (may fail due to CORS)
+      if (window.parent !== window && window.parent.location.href) {
+        sourceUrl = window.parent.location.href;
+      }
+    } catch(e) {
+      // Method 2: Use document.referrer if parent access fails
+      if (document.referrer) {
+        sourceUrl = document.referrer;
+      }
+    }
+    
+    document.getElementById('lead_source_description').value = sourceUrl;
     document.getElementById('form_timestamp').value = String(Date.now());
     document.getElementById('form_rendered_at').value = String(formStartTime);
 
